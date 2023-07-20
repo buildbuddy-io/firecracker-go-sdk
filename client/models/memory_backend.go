@@ -36,9 +36,9 @@ type MemoryBackend struct {
 	// Required: true
 	BackendPath *string `json:"backend_path"`
 
-	// backend type
+	// Describes whether guest memory will be served from a file or an external UFFD handler. Use UffdPrivileged if you need to serve page faults in both user-space and the kernel. Use Uffd id you only need to serve page faults in user-space.
 	// Required: true
-	// Enum: [File Uffd]
+	// Enum: [File Uffd UffdPrivileged]
 	BackendType *string `json:"backend_type"`
 }
 
@@ -73,7 +73,7 @@ var memoryBackendTypeBackendTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["File","Uffd"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["File","Uffd","UffdPrivileged"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -88,6 +88,9 @@ const (
 
 	// MemoryBackendBackendTypeUffd captures enum value "Uffd"
 	MemoryBackendBackendTypeUffd string = "Uffd"
+
+	// MemoryBackendBackendTypeUffdPrivileged captures enum value "UffdPrivileged"
+	MemoryBackendBackendTypeUffdPrivileged string = "UffdPrivileged"
 )
 
 // prop value enum
